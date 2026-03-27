@@ -379,6 +379,38 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ── LOGIN ──────────────────────────────────── */
+#login-screen{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 40%,#0d0e1f 0%,#07080f 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:0}
+.login-ascii-arch{color:var(--blue);font-size:9px;line-height:1.2;white-space:pre;text-align:center;margin-bottom:18px;filter:drop-shadow(0 0 20px rgba(122,162,247,.5));animation:fadeUp .6s .1s ease both}
+.login-os-label{font-family:'Orbitron',sans-serif;font-size:clamp(1.2rem,2.5vw,2rem);font-weight:900;background:linear-gradient(120deg,var(--blue),var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.1em;animation:fadeUp .5s .3s ease both;margin-bottom:4px}
+.login-kernel-info{color:var(--fg-dark);font-size:10.5px;letter-spacing:.3em;animation:fadeUp .5s .45s ease both;margin-bottom:28px}
+.login-box{background:rgba(22,22,30,.92);border:1px solid var(--border);border-radius:8px;padding:28px 36px;width:min(420px,92vw);backdrop-filter:blur(12px);box-shadow:0 0 60px rgba(122,162,247,.08),0 24px 80px rgba(0,0,0,.6);animation:fadeUp .5s .6s ease both}
+.login-user-avatar{text-align:center;margin-bottom:16px}
+.login-avatar-icon{font-size:48px;filter:drop-shadow(0 0 16px rgba(122,162,247,.4))}
+.login-username-display{color:var(--blue);font-size:15px;font-weight:700;letter-spacing:.06em;margin-top:6px}
+.login-hostname{color:var(--fg-dark);font-size:11px}
+.login-field{margin-bottom:14px}
+.login-field label{display:block;color:var(--fg-dark);font-size:10.5px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:5px}
+.login-field input{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:4px;color:var(--fg);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;transition:border-color .15s,box-shadow .15s}
+.login-field input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(122,162,247,.15)}
+.login-submit{width:100%;background:transparent;border:1px solid var(--blue);color:var(--blue);font-family:var(--font);font-size:13px;padding:10px;border-radius:4px;cursor:pointer;letter-spacing:.08em;transition:all .2s;margin-top:6px}
+.login-submit:hover{background:var(--blue);color:var(--bg);box-shadow:0 0 24px rgba(122,162,247,.3)}
+.login-error{color:var(--red);font-size:11px;text-align:center;margin-top:8px;min-height:16px;animation:fadeUp .2s ease}
+.login-hint{color:var(--fg-dark);font-size:10px;text-align:center;margin-top:12px;opacity:.6}
+.login-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:1001}
+
+/* ── MAPSCII ─────────────────────────────────── */
+.mapscii-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:400;flex-direction:column;font-family:var(--font)}
+.mapscii-overlay.show{display:flex}
+.mapscii-titlebar{background:var(--bg3);border-bottom:1px solid var(--border);padding:6px 14px;display:flex;align-items:center;gap:10px;font-size:11px;color:var(--fg-dark);flex-shrink:0}
+.mapscii-body{flex:1;overflow:hidden;position:relative;background:#0a0e12}
+#mapscii-canvas{width:100%;height:100%}
+.mapscii-hud{position:absolute;bottom:0;left:0;right:0;background:rgba(10,14,18,.88);border-top:1px solid var(--border);padding:5px 14px;display:flex;gap:14px;font-size:10.5px;color:var(--fg-dark);align-items:center;backdrop-filter:blur(4px)}
+.mapscii-coords{color:var(--cyan);font-size:11px}
+.mapscii-zoom-label{color:var(--green)}
+.mapscii-legend{display:flex;gap:10px;flex-wrap:wrap;font-size:10px}
+.mapscii-legend span{color:var(--fg-dim)}
 </style>
 </head>
 <body>
@@ -392,6 +424,32 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 <div id="train-wrap">
 <span style="color:var(--red)">🚂</span><span style="color:var(--yellow)">══════</span><span style="color:var(--fg)">[ vaibhav@archlinux — I use Arch btw ]</span><span style="color:var(--yellow)">══════</span><span style="color:var(--cyan)">🚃</span><span style="color:var(--green)">🚃</span><span style="color:var(--blue)">🚃</span>
 <br><span style="color:var(--fg-dark)"> ___||___|_||___|_||___|_||___|_||___|_||___</span></div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-scanlines"></div>
+  <pre class="login-ascii-arch" id="loginArchLogo"></pre>
+  <div class="login-os-label">ARCH LINUX — HYPRLAND</div>
+  <div class="login-kernel-info">Linux 6.12.37-1-lts · Wayland · Tokyo Night · v5.0</div>
+  <div class="login-box">
+    <div class="login-user-avatar">
+      <div class="login-avatar-icon">🐧</div>
+      <div class="login-username-display">vaibhav</div>
+      <div class="login-hostname">vaibhav@archlinux</div>
+    </div>
+    <div class="login-field">
+      <label>Username</label>
+      <input id="loginUser" type="text" value="vaibhav" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input id="loginPass" type="password" placeholder="Enter password..." autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-submit" onclick="doLogin()">❯ sudo login</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-hint">hint: try "arch" or "password" or "iusearchbtw"</div>
+  </div>
+</div>
 
 <!-- SPLASH -->
 <div id="splash">
@@ -470,6 +528,33 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 <!-- FLOAT CONTAINER -->
 <div id="floatContainer"></div>
 
+<!-- MAPSCII -->
+<div class="mapscii-overlay" id="mapscii-overlay">
+  <div class="mapscii-titlebar">
+    <span style="color:var(--green)">▲</span>
+    <span style="flex:1">mapscii — World Map · vaibhav@archlinux</span>
+    <span style="color:var(--fg-dark)">WASD/arrows pan · +/- zoom · ESC quit</span>
+    <span style="cursor:pointer;color:var(--red);margin-left:10px" onclick="closeMapscii()">✕</span>
+  </div>
+  <div class="mapscii-body">
+    <canvas id="mapscii-canvas"></canvas>
+    <div class="mapscii-hud">
+      <span class="mapscii-coords" id="mapscii-coords">📍 Lat: 20.0°N  Lon: 77.0°E</span>
+      <span class="mapscii-zoom-label" id="mapscii-zoom">Zoom: 3</span>
+      <span style="color:var(--border)">│</span>
+      <div class="mapscii-legend">
+        <span style="color:#4a9eff">▓ Ocean</span>
+        <span style="color:#5a8a3a">█ Land</span>
+        <span style="color:#9ece6a">▒ Forest</span>
+        <span style="color:#e0af68">░ Desert</span>
+        <span style="color:#fff">▲ Mountains</span>
+        <span style="color:var(--red)">★ Cities</span>
+      </div>
+      <span style="margin-left:auto;color:var(--fg-dark);font-size:10px">mapscii v0.3.2 — terminal world map</span>
+    </div>
+  </div>
+</div>
+
 <!-- TERMINAL APP -->
 <div id="terminal-app">
   <!-- WAYBAR -->
@@ -541,6 +626,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
         <button class="sb-btn sb-fun" onclick="runCmd('doom')"><span class="sb-icon">💀</span>doom ascii</button>
         <button class="sb-btn sb-fun" onclick="runCmd('breakout')"><span class="sb-icon">🧱</span>breakout</button>
         <button class="sb-btn sb-fun" onclick="runCmd('pong')"><span class="sb-icon">🏓</span>pong</button>
+        <button class="sb-btn sb-fun" onclick="runCmd('pacman')"><span class="sb-icon">🟡</span>pac-man</button>
       </div>
 
       <div class="sidebar-group">
@@ -579,6 +665,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
         <button class="sb-btn" onclick="runCmd('theme')"><span class="sb-icon">🎨</span>theme</button>
         <button class="sb-btn" onclick="runCmd('archcmds')"><span class="sb-icon">▲</span>archcmds</button>
         <button class="sb-btn" onclick="runCmd('real-world')"><span class="sb-icon">🌍</span>real world</button>
+        <button class="sb-btn" onclick="runCmd('mapscii')"><span class="sb-icon">🗺</span>mapscii</button>
         <button class="sb-btn" onclick="runCmd('resume')"><span class="sb-icon">📄</span>resume</button>
         <button class="sb-btn" onclick="runCmd('ls -la')"><span class="sb-icon">📁</span>ls -la</button>
         <button class="sb-btn" onclick="runCmd('help')"><span class="sb-icon">?</span>help</button>
@@ -623,7 +710,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
       <div class="output-panels" id="outputPanels"></div>
 
       <div class="hint-bar">
-        <span><kbd>games</kbd> · <kbd>snake</kbd> · <kbd>tetris</kbd> · <kbd>invaders</kbd> · <kbd>fire</kbd> · <kbd>plasma</kbd> · <kbd>dvd</kbd> · <kbd>monika</kbd> · <kbd>monika-ascii</kbd> · <kbd>matrix</kbd></span>
+        <span><kbd>games</kbd> · <kbd>pacman</kbd> · <kbd>snake</kbd> · <kbd>doom</kbd> · <kbd>tetris</kbd> · <kbd>fire</kbd> · <kbd>plasma</kbd> · <kbd>mapscii</kbd> · <kbd>monika</kbd> · <kbd>matrix</kbd></span>
         <span><kbd>↑↓</kbd> history · <kbd>Tab</kbd> complete · <kbd>Ctrl+T</kbd> new tab</span>
       </div>
 
@@ -653,6 +740,53 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 </div>
 
 <script>
+// ══════════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════════
+const LOGIN_ARCH_SMALL=`      /\\
+     /  \\
+    /\\   \\
+   /  __  \\
+  / /    \\ \\
+ / /      \\ \\
+/_/   Arch  \\_\\
+    Linux 🐧`;
+
+document.getElementById('loginArchLogo').textContent=LOGIN_ARCH_SMALL;
+
+const VALID_PASSWORDS=['arch','password','iusearchbtw','vaibhav','hyprland','1234','linux','sudo'];
+let loginAttempts=0;
+
+function doLogin(){
+  const user=document.getElementById('loginUser').value.trim();
+  const pass=document.getElementById('loginPass').value.trim();
+  const err=document.getElementById('loginError');
+  if(!user){err.textContent='⚠ Username required';return;}
+  if(!pass){err.textContent='⚠ Password required';document.getElementById('loginPass').focus();return;}
+  loginAttempts++;
+  if(VALID_PASSWORDS.includes(pass.toLowerCase())||pass===user){
+    err.style.color='var(--green)';
+    err.textContent=`✓ Authentication successful — Welcome, ${user}!`;
+    const btn=document.querySelector('.login-submit');
+    btn.textContent='✓ Logging in...';btn.style.background='var(--green)';btn.style.borderColor='var(--green)';btn.style.color='var(--bg)';
+    setTimeout(()=>{
+      document.getElementById('login-screen').style.opacity='0';
+      document.getElementById('login-screen').style.transition='opacity .4s ease';
+      setTimeout(()=>{document.getElementById('login-screen').style.display='none';},400);
+    },700);
+  } else {
+    err.style.color='var(--red)';
+    if(loginAttempts>=3){
+      err.textContent=`⚠ ${loginAttempts} failed attempts — hint: try "arch"`;
+    } else {
+      err.textContent='✗ Authentication failure — wrong password';
+    }
+    const inp=document.getElementById('loginPass');
+    inp.style.borderColor='var(--red)';inp.value='';
+    setTimeout(()=>{inp.style.borderColor='';inp.focus();},600);
+  }
+}
+
 // ══════════════════════════════════════════════════
 //  BG MATRIX
 // ══════════════════════════════════════════════════
@@ -1463,8 +1597,10 @@ const HELP_DATA = [
   {t:'trow',c1:'snake',c2:'Snake game 🐍'},
   {t:'trow',c1:'breakout',c2:'Breakout / brick breaker 🧱'},
   {t:'trow',c1:'pong',c2:'Pong vs AI 🏓'},
+  {t:'trow',c1:'pacman',c2:'PAC-MAN arcade game 🟡'},
+  {t:'trow',c1:'doom',c2:'💀 DOOM raycaster — WASD move, E shoot'},
   {t:'blank'},
-  {t:'trow',c1:'monika',c2:'Chat with Monika (DDLC) 🌹'},
+  {t:'trow',c1:'mapscii',c2:'🗺 ASCII World Map — WASD pan, +/- zoom'},
   {t:'trow',c1:'anime / waifu',c2:'ASCII anime girl'},
   {t:'trow',c1:'japan [name]',c2:'Japan ASCII art 🇯🇵'},
   {t:'trow',c1:'pipes',c2:'Pipes screensaver'},
@@ -1687,7 +1823,9 @@ function processCommand(cmd){
   if(cmd==='invaders'){renderLines([{t:'green',v:'  👾 Space Invaders! AD/← → move · Space shoot · ESC quit'},{t:'blank'}]);setTimeout(startInvaders,200);return;}
   if(cmd==='asteroids'){renderLines([{t:'purple',v:'  ☄ Asteroids! WASD fly · Space shoot · ESC quit'},{t:'blank'}]);setTimeout(startAsteroids,200);return;}
   if(cmd==='flappy'){renderLines([{t:'yellow',v:'  🐦 Flappy Bird! Space or click to flap · ESC quit'},{t:'blank'}]);setTimeout(startFlappy,200);return;}
-  if(cmd==='doom'){renderLines([{t:'red',v:'  💀 DOOM ASCII! WASD move · E shoot · ESC quit'},{t:'blank'}]);setTimeout(startDoom,200);return;}
+  if(cmd==='doom'){renderLines([{t:'red',v:'  💀 DOOM ASCII! WASD move · A/D turn · E shoot · ESC quit'},{t:'blank'}]);setTimeout(startDoom,200);return;}
+  if(cmd==='mapscii'||cmd==='map'||cmd==='worldmap'){renderLines([{t:'green',v:'  🗺 Opening MapScii — ASCII World Map...'},{t:'dim',v:'  WASD/arrows pan · +/- zoom · ESC quit'},{t:'blank'}]);setTimeout(startMapscii,200);return;}
+  if(cmd==='pacman'||cmd==='pac-man'||cmd==='pacman-game'){renderLines([{t:'yellow',v:'  🟡 PAC-MAN! WASD/arrows move · ESC quit'},{t:'blank'}]);setTimeout(startPacman,200);return;}
   if(cmd==='plasma'){renderLines([{t:'purple',v:'  🌈 Plasma screensaver... [click to exit]'},{t:'blank'}]);setTimeout(startPlasma,200);return;}
   if(cmd==='lava'){renderLines([{t:'orange',v:'  🫧 Lava lamp screensaver... [click to exit]'},{t:'blank'}]);setTimeout(startLava,200);return;}
   if(cmd==='dvd'){renderLines([{t:'cyan',v:'  📀 DVD bounce screensaver... [click to exit]'},{t:'blank'}]);setTimeout(startDVD,200);return;}
@@ -1711,8 +1849,9 @@ function processCommand(cmd){
     {t:'trow',c1:'  doom',c2:'DOOM ASCII — WASD+E 💀'},
     {t:'trow',c1:'  breakout',c2:'Brick breaker — mouse 🧱'},
     {t:'trow',c1:'  pong',c2:'Pong vs AI — W/S 🏓'},
+    {t:'trow',c1:'  pacman',c2:'🟡 PAC-MAN arcade — WASD'},
     {t:'blank'},
-    {t:'section',v:'─── SCREENSAVERS ─────────────────────────────────────'},
+    {t:'trow',c1:'  mapscii',c2:'🗺 ASCII World Map — WASD+/- zoom'},
     {t:'trow',c1:'  fire',c2:'🔥 Doom-style pixel fire'},
     {t:'trow',c1:'  plasma',c2:'🌈 Psychedelic plasma waves'},
     {t:'trow',c1:'  lava',c2:'🫧 Lava lamp blobs'},
@@ -1768,7 +1907,7 @@ function processCommand(cmd){
   }
 
   // PACMAN/YAY
-  if(cmd.startsWith('sudo pacman')||cmd.startsWith('pacman')||cmd.startsWith('yay')||cmd.startsWith('paru')){
+  if(cmd.startsWith('sudo pacman')||cmd.startsWith('yay')||cmd.startsWith('paru')||(cmd.startsWith('pacman -')||cmd.startsWith('pacman --'))){
     const pkg=cmd.split('-S ')[1]||'system';
     renderLines([{t:'cyan',v:'  :: Syncing package databases...'},{t:'output',v:'  core 134.2 KiB 2.45 MiB/s [####################] 100%'},{t:'green',v:`  ✓ ${pkg&&!pkg.startsWith('-')?('Installing '+pkg+'...'):'All packages up to date'}`},{t:'dim',v:'  (I use Arch btw)'},{t:'blank'}]);
     pushNotif('📦','pacman','Operation complete!','ok');return;
@@ -2777,98 +2916,800 @@ function startFlappy(){
 }
 
 // ══════════════════════════════════════════════════
-//  💀 DOOM ASCII GAME
+//  💀 DOOM ASCII RAYCASTER — IMPROVED
 // ══════════════════════════════════════════════════
 function startDoom(){
   closeFX();
   const ov=document.createElement('div');ov.id='game-overlay';
-  ov.style.cssText='position:fixed;inset:0;z-index:310;background:#0a0000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:JetBrains Mono,monospace;color:#ff4400;';
-  const W=60,H=22;
-  const WALL='#',FLOOR='.',ENEMY='E',PLAYER='@';
-  // Simple dungeon map
-  const MAP=[
-    '############################################################',
-    '#..........#...............#...............................#',
-    '#..........#...............#...............................#',
-    '#....E.....#.......E.......#..........E................E...#',
-    '#..........#...............#...............................#',
-    '#..........########.########...............................#',
-    '#..........#...............................................#',
-    '#..........#.......E...................................E...#',
-    '#..........#...............................................#',
-    '######.#####...............################################',
-    '#.........................................................#',
-    '#....E....................................................#',
-    '#.........................................................#',
-    '#.........................................................#',
-    '############################################################',
-  ].map(r=>r.split(''));
-  let px=2,py=2,pdir=0,health=100,ammo=30,score=0,enemies=[],flash=0,raf;
-  // Collect enemy positions
-  MAP.forEach((row,y)=>row.forEach((c,x)=>{if(c==='E'){enemies.push({x,y,hp:3,active:true});MAP[y][x]='.';}if(c==='@'){px=x;py=y;MAP[y][x]='.';}if(c=='@'){px=x;py=y;}}));
-  if(!enemies.length){[[5,3],[12,7],[20,3],[30,5],[45,3],[52,7]].forEach(([ex,ey])=>{if(MAP[ey]&&MAP[ey][ex]==='.')enemies.push({x:ex,y:ey,hp:3,active:true});});}
-  function mapAt(x,y){const row=MAP[Math.floor(y)];return row?row[Math.floor(x)]||'#':'#';}
-  const DIRS=[{dx:0,dy:-1,sym:'↑'},{dx:1,dy:0,sym:'→'},{dx:0,dy:1,sym:'↓'},{dx:-1,dy:0,sym:'←'}];
-  // Raycasting (simple ASCII)
-  function castSlice(angle){
-    let ax=px+0.5,ay=py+0.5;
-    for(let i=0;i<20;i++){
-      ax+=Math.cos(angle)*0.3;ay+=Math.sin(angle)*0.3;
-      if(mapAt(ax,ay)==='#')return{dist:i,hit:true};
-    }
-    return{dist:20,hit:false};
-  }
-  const SHADE=[' ','.',':','!','|','█','█','█','█','█'];
+  ov.style.cssText='position:fixed;inset:0;z-index:310;background:#0a0000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:JetBrains Mono,monospace;';
   ov.innerHTML=`
-  <div style="font-size:13px;letter-spacing:0.1em;margin-bottom:6px;color:#ff6600;">💀 DOOM ASCII — WASD move · E shoot · ESC quit</div>
-  <pre id="doom-view" style="font-size:11px;line-height:1.2;color:#ff4400;background:#0a0000;padding:8px;border:1px solid #440000;white-space:pre;"></pre>
-  <div id="doom-hud" style="font-size:12px;margin-top:6px;color:#ff8800;">❤ 100  |  🔫 30  |  Score: 0</div>`;
+  <div style="color:#ff6600;font-size:12px;letter-spacing:0.12em;margin-bottom:4px;">💀 DOOM ASCII — WASD move · A/D turn · E shoot · R restart · ESC quit</div>
+  <canvas id="doom-cv" width="600" height="320" style="border:2px solid #440000;background:#0a0000;image-rendering:pixelated;"></canvas>
+  <div id="doom-hud" style="margin-top:5px;display:flex;gap:18px;font-size:12px;color:#ff8800;align-items:center;">
+    <span id="doom-health" style="color:#ff4400">❤ 100</span>
+    <span id="doom-ammo" style="color:#ffaa00">🔫 30</span>
+    <span id="doom-score" style="color:#ffff00">💀 0</span>
+    <span id="doom-face" style="font-size:20px">😐</span>
+    <span id="doom-msg" style="color:#ff6600;font-size:11px"></span>
+  </div>`;
   document.body.appendChild(ov);
+  const cv=document.getElementById('doom-cv'),ctx=cv.getContext('2d');
+  const CW=600,CH=320;
+  ctx.font='bold 10px JetBrains Mono';
+
+  // Map layout
+  const MAP=[
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,1,1,0,1,1,0,1,0,1,1,1,0,1,1,1,0,0,1],
+    [1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1],
+    [1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,1],
+    [1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,0,0,1],
+    [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+    [1,0,1,1,1,0,1,1,0,1,1,1,0,0,1,0,0,0,0,1],
+    [1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1],
+    [1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,1,0,0,1],
+    [1,0,1,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  ];
+  const ROWS=MAP.length,COLS=MAP[0].length;
+  function wallAt(x,y){const mx=Math.floor(x),my=Math.floor(y);if(mx<0||mx>=COLS||my<0||my>=ROWS)return true;return MAP[my][mx]===1;}
+
+  let px=1.5,py=1.5,angle=0,health=100,ammo=30,score=0,dead=false,shootFlash=0,raf;
+  const keys={};
+  // Enemies with positions
+  const ENEMY_STARTS=[[3.5,3.5],[12.5,5.5],[7.5,9.5],[15.5,3.5],[16.5,7.5],[5.5,7.5],[10.5,9.5],[14.5,10.5]];
+  let enemies=ENEMY_STARTS.map(([ex,ey])=>({x:ex,y:ey,hp:3,dead:false,alert:false,moveTimer:0,dir:Math.random()*Math.PI*2}));
+
+  // ASCII shade chars
+  const WALL_CHARS=['█','▓','▒','░',' '];
+  const FLOOR_CHARS=['.','·','`',' '];
+  const CEIL_CHARS=[' ',' ',' ',' '];
+  const FOV=Math.PI/2.8;
+  const NUM_RAYS=80;
+  const CHAR_W=Math.floor(CW/NUM_RAYS);
+  const LINE_H=16;
+
+  function castRay(rayAngle){
+    let rx=px,ry=py;
+    const cos=Math.cos(rayAngle),sin=Math.sin(rayAngle);
+    for(let i=0;i<25;i++){
+      rx+=cos*0.15;ry+=sin*0.15;
+      if(wallAt(rx,ry))return{dist:i*0.15,x:rx,y:ry};
+    }
+    return{dist:25,x:rx,y:ry};
+  }
+
+  function getEnemyScreen(en){
+    const dx=en.x-px,dy=en.y-py;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist>12)return null;
+    let eAngle=Math.atan2(dy,dx);
+    let dAngle=eAngle-angle;
+    while(dAngle>Math.PI)dAngle-=Math.PI*2;
+    while(dAngle<-Math.PI)dAngle+=Math.PI*2;
+    if(Math.abs(dAngle)>FOV/1.5)return null;
+    const screenX=Math.round((dAngle/FOV+0.5)*CW);
+    const h=Math.min(CH,Math.floor(CH/(dist*0.8+0.001)));
+    return{screenX,h,dist,dAngle};
+  }
+
   function render(){
-    const VIEW_W=60,VIEW_H=22,FOV=Math.PI/2.5;
-    let out='';
-    for(let row=0;row<VIEW_H;row++){
-      let line='';
-      for(let col=0;col<VIEW_W;col++){
-        const angle=-FOV/2+FOV*(col/VIEW_W)+(pdir*Math.PI/2);
-        const{dist}=castSlice(angle);
-        const wallH=Math.min(VIEW_H,Math.floor(VIEW_H/(dist*0.5+0.001)));
-        const mid=Math.floor(VIEW_H/2);
-        if(row>=mid-Math.floor(wallH/2)&&row<mid+Math.ceil(wallH/2)){
-          const shade=SHADE[Math.max(0,Math.floor(9-dist*0.5))];
-          line+=shade;
-        } else if(row>VIEW_H/2){
-          line+=dist>8?'.':':';
-        } else {
-          line+=' ';
+    ctx.fillStyle='#0a0000';ctx.fillRect(0,0,CW,CH);
+    // Ceiling gradient
+    const ceilGrad=ctx.createLinearGradient(0,0,0,CH/2);
+    ceilGrad.addColorStop(0,'#0a0000');ceilGrad.addColorStop(1,'#1a0800');
+    ctx.fillStyle=ceilGrad;ctx.fillRect(0,0,CW,CH/2);
+    // Floor
+    const floorGrad=ctx.createLinearGradient(0,CH/2,0,CH);
+    floorGrad.addColorStop(0,'#1a0500');floorGrad.addColorStop(1,'#0a0200');
+    ctx.fillStyle=floorGrad;ctx.fillRect(0,CH/2,CW,CH/2);
+
+    const zbuf=new Array(NUM_RAYS).fill(Infinity);
+
+    // Raycasting walls
+    for(let col=0;col<NUM_RAYS;col++){
+      const rayAngle=angle-FOV/2+FOV*(col/NUM_RAYS);
+      const {dist}=castRay(rayAngle);
+      const corrDist=dist*Math.cos(rayAngle-angle);
+      zbuf[col]=corrDist;
+      const wallH=Math.min(CH,Math.floor(CH/(corrDist*0.9+0.001)));
+      const top=Math.floor((CH-wallH)/2);
+      const shade=Math.max(0,1-corrDist/14);
+      // Wall color based on distance
+      const r=Math.floor(180*shade+20);
+      const g=Math.floor(30*shade);
+      const b=Math.floor(10*shade);
+      const x=col*CHAR_W;
+      // Draw wall slice
+      ctx.fillStyle=`rgb(${r},${g},${b})`;
+      ctx.fillRect(x,top,CHAR_W,wallH);
+      // Wall texture lines
+      if(shade>0.1){
+        ctx.fillStyle=`rgba(0,0,0,${0.3*(1-shade)})`;
+        for(let row=top;row<top+wallH;row+=4){
+          ctx.fillRect(x,row,CHAR_W,1);
         }
       }
-      out+=line+'\n';
     }
-    const view=document.getElementById('doom-view');
-    if(view){view.textContent=out;}
-    // Flash on shoot
-    if(flash>0){view.style.background=`rgba(255,100,0,${flash*0.1})`;flash--;}else{view&&(view.style.background='#0a0000');}
-    const hud=document.getElementById('doom-hud');
-    if(hud)hud.textContent=`❤ ${health}  |  🔫 ${ammo}  |  Score: ${score}  |  Enemies: ${enemies.filter(e=>e.active).length}  |  Facing: ${DIRS[pdir].sym}`;
+
+    // Draw enemies
+    const visEnemies=enemies.map(en=>{
+      if(en.dead)return null;
+      return getEnemyScreen(en);
+    }).filter(Boolean).sort((a,b)=>b.dist-a.dist);
+
+    visEnemies.forEach(({screenX,h,dist})=>{
+      if(dist<0.5)return;
+      const ew=Math.max(8,Math.floor(h*0.6));
+      const ex=screenX-ew/2;
+      const ey=(CH-h)/2;
+      const ci=Math.floor((screenX-ew/2)/CHAR_W);
+      // Check z-buffer
+      if(ci>=0&&ci<NUM_RAYS&&dist<zbuf[ci]){
+        // Enemy sprite — color based on dist/alert
+        const shade=Math.max(0,1-dist/12);
+        const col=`rgba(${Math.floor(255*shade)},${Math.floor(50*shade)},0,0.9)`;
+        ctx.fillStyle=col;
+        ctx.fillRect(ex,ey+h*0.1,ew,h*0.8);
+        ctx.fillStyle='rgba(0,0,0,0.5)';
+        ctx.fillRect(ex+ew*0.2,ey+h*0.1,ew*0.3,h*0.25);ctx.fillRect(ex+ew*0.5,ey+h*0.1,ew*0.3,h*0.25);
+        // Enemy label
+        ctx.fillStyle='#ff4444';
+        ctx.font='bold 9px JetBrains Mono';
+        ctx.textAlign='center';
+        ctx.fillText(dist<3?'[CLOSE!]':'[E]',screenX,ey+h*0.08);
+      }
+    });
+
+    // Shoot flash
+    if(shootFlash>0){
+      ctx.fillStyle=`rgba(255,120,0,${shootFlash*0.12})`;
+      ctx.fillRect(0,0,CW,CH);
+      shootFlash--;
+    }
+
+    // Crosshair
+    ctx.strokeStyle='rgba(255,200,100,0.7)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(CW/2-10,CH/2);ctx.lineTo(CW/2+10,CH/2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(CW/2,CH/2-10);ctx.lineTo(CW/2,CH/2+10);ctx.stroke();
+
+    // Minimap
+    const MM=4,MX=CW-COLS*MM-8,MY=8;
+    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(MX-2,MY-2,COLS*MM+4,ROWS*MM+4);
+    MAP.forEach((row,ry)=>row.forEach((c,rx)=>{
+      ctx.fillStyle=c?'#442200':'#1a0800';
+      ctx.fillRect(MX+rx*MM,MY+ry*MM,MM-1,MM-1);
+    }));
+    enemies.forEach(en=>{if(!en.dead){ctx.fillStyle='#ff4400';ctx.fillRect(MX+en.x*MM-1,MY+en.y*MM-1,3,3);}});
+    ctx.fillStyle='#ffff00';
+    ctx.fillRect(MX+px*MM-2,MY+py*MM-2,4,4);
+    ctx.strokeStyle='#ffff00';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(MX+px*MM,MY+py*MM);
+    ctx.lineTo(MX+(px+Math.cos(angle)*2.5)*MM,MY+(py+Math.sin(angle)*2.5)*MM);ctx.stroke();
+
+    // Game over
+    if(dead){
+      ctx.fillStyle='rgba(0,0,0,0.85)';ctx.fillRect(0,0,CW,CH);
+      ctx.fillStyle='#f7768e';ctx.font='bold 36px Orbitron,JetBrains Mono';ctx.textAlign='center';
+      ctx.fillText('YOU DIED',CW/2,CH/2-20);
+      ctx.fillStyle='#ff8800';ctx.font='14px JetBrains Mono';
+      ctx.fillText(`Score: ${score}  Enemies killed: ${enemies.filter(e=>e.dead).length}`,CW/2,CH/2+20);
+      ctx.fillStyle='#7aa2f7';ctx.font='13px JetBrains Mono';
+      ctx.fillText('Press R to restart',CW/2,CH/2+50);
+    }
+    ctx.textAlign='left';
   }
-  function step(){render();raf=requestAnimationFrame(step);}
+
+  function updateHUD(){
+    document.getElementById('doom-health').textContent=`❤ ${health}`;
+    document.getElementById('doom-ammo').textContent=`🔫 ${ammo}`;
+    document.getElementById('doom-score').textContent=`💀 ${score}`;
+    const alive=enemies.filter(e=>!e.dead).length;
+    document.getElementById('doom-face').textContent=health>70?'😐':health>40?'😬':health>20?'😨':'😱';
+    document.getElementById('doom-msg').textContent=`Enemies: ${alive} remaining`;
+  }
+
+  function shoot(){
+    if(ammo<=0||dead)return;
+    ammo--;shootFlash=8;
+    const shootAngle=angle;
+    let hit=false;
+    enemies.forEach(en=>{
+      if(en.dead||hit)return;
+      const dx=en.x-px,dy=en.y-py;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist>8)return;
+      let eA=Math.atan2(dy,dx);
+      let da=eA-shootAngle;
+      while(da>Math.PI)da-=Math.PI*2;while(da<-Math.PI)da+=Math.PI*2;
+      if(Math.abs(da)<0.25+0.1*(1/dist)){
+        en.hp--;
+        if(en.hp<=0){en.dead=true;score+=100;pushNotif('💀','DOOM','Enemy eliminated! +100','ok');}
+        hit=true;
+      }
+    });
+    if(!hit&&ammo<5){document.getElementById('doom-msg').textContent='Click! (out of ammo)';setTimeout(()=>document.getElementById('doom-msg').textContent='',800);}
+    updateHUD();
+  }
+
+  function step(){
+    if(!dead){
+      const spd=0.07,turnSpd=0.055;
+      if(keys['w']||keys['ArrowUp']){const nx=px+Math.cos(angle)*spd,ny=py+Math.sin(angle)*spd;if(!wallAt(nx+Math.cos(angle)*0.2,py))px=nx;if(!wallAt(px,ny+Math.sin(angle)*0.2))py=ny;}
+      if(keys['s']||keys['ArrowDown']){const nx=px-Math.cos(angle)*spd,ny=py-Math.sin(angle)*spd;if(!wallAt(nx,py))px=nx;if(!wallAt(px,ny))py=ny;}
+      if(keys['a']||keys['ArrowLeft'])angle-=turnSpd;
+      if(keys['d']||keys['ArrowRight'])angle+=turnSpd;
+
+      // Enemy AI
+      enemies.forEach(en=>{
+        if(en.dead)return;
+        const dx=px-en.x,dy=py-en.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<7)en.alert=true;
+        if(en.alert&&dist>0.5){
+          en.moveTimer++;
+          if(en.moveTimer%3===0){
+            const spd2=0.025;
+            const nx=en.x+dx/dist*spd2,ny=en.y+dy/dist*spd2;
+            if(!wallAt(nx,en.y))en.x=nx;
+            if(!wallAt(en.x,ny))en.y=ny;
+          }
+          // Attack player
+          if(dist<1.2&&en.moveTimer%90===0){health=Math.max(0,health-12);updateHUD();pushNotif('💀','DOOM','Enemy hit you! -12 HP','warn');}
+        }
+        if(health<=0){dead=true;document.getElementById('doom-face').textContent='☠';}
+      });
+    }
+    render();
+    raf=requestAnimationFrame(step);
+  }
+
   raf=requestAnimationFrame(step);
   const onKey=e=>{
-    if(e.key==='Escape'){cancelAnimationFrame(raf);document.removeEventListener('keydown',onKey);ov.remove();document.getElementById('termInput').focus();return;}
-    const d=DIRS[pdir];
-    if(e.key==='w'||e.key==='ArrowUp'){const nx=px+d.dx,ny=py+d.dy;if(mapAt(nx+0.5,py+0.5)!=='#')px=nx;if(mapAt(px+0.5,ny+0.5)!=='#')py=ny;}
-    if(e.key==='s'||e.key==='ArrowDown'){const nx=px-d.dx,ny=py-d.dy;if(mapAt(nx+0.5,py+0.5)!=='#')px=nx;if(mapAt(px+0.5,ny+0.5)!=='#')py=ny;}
-    if(e.key==='a'||e.key==='ArrowLeft')pdir=(pdir+3)%4;
-    if(e.key==='d'||e.key==='ArrowRight')pdir=(pdir+1)%4;
-    if(e.key==='e'||e.key==='E'){
-      if(ammo>0){ammo--;flash=6;const d2=DIRS[pdir];
-        enemies.forEach(en=>{if(!en.active)return;const dx=en.x-px,dy=en.y-py;if(Math.abs(dx)<=1&&Math.abs(dy)<=1&&((d2.dx===Math.sign(dx)&&dy===0)||(d2.dy===Math.sign(dy)&&dx===0))){en.hp--;if(en.hp<=0){en.active=false;score+=100;}}});
+    if(e.type==='keydown'){
+      keys[e.key]=true;
+      if(e.key==='Escape'){cancelAnimationFrame(raf);document.removeEventListener('keydown',onKey);document.removeEventListener('keyup',onKey);ov.remove();document.getElementById('termInput').focus();return;}
+      if((e.key==='e'||e.key==='E'||e.key===' ')&&!dead)shoot();
+      if((e.key==='r'||e.key==='R')&&dead){
+        px=1.5;py=1.5;angle=0;health=100;ammo=30;score=0;dead=false;shootFlash=0;
+        enemies=ENEMY_STARTS.map(([ex,ey])=>({x:ex,y:ey,hp:3,dead:false,alert:false,moveTimer:0,dir:Math.random()*Math.PI*2}));
+        updateHUD();
       }
+    } else keys[e.key]=false;
+    e.preventDefault();
+  };
+  document.addEventListener('keydown',onKey);document.addEventListener('keyup',onKey);
+  updateHUD();
+}
+
+// ══════════════════════════════════════════════════
+//  🗺 MAPSCII — ASCII WORLD MAP
+// ══════════════════════════════════════════════════
+let mapsciiRaf,mapsciiRunning=false;
+let mapCenterLon=20,mapCenterLat=20,mapZoom=3;
+
+function startMapscii(){
+  mapsciiRunning=true;
+  const ov=document.getElementById('mapscii-overlay');
+  ov.classList.add('show');
+  const cv=document.getElementById('mapscii-canvas');
+  const parent=cv.parentElement;
+  cv.width=parent.clientWidth||window.innerWidth;
+  cv.height=parent.clientHeight-36||window.innerHeight-80;
+  drawMapscii();
+  document.addEventListener('keydown',mapsciiKeyHandler);
+}
+
+function closeMapscii(){
+  mapsciiRunning=false;
+  document.getElementById('mapscii-overlay').classList.remove('show');
+  document.removeEventListener('keydown',mapsciiKeyHandler);
+  cancelAnimationFrame(mapsciiRaf);
+  document.getElementById('termInput').focus();
+}
+
+// Simplified world geometry — coast outlines as lat/lon polygons
+// This is a simplified world map data using canvas ASCII rendering
+const WORLD_LAND=[
+  // North America rough outline
+  {name:'North America',color:'#5a8a3a',pts:[[49,125],[49,95],[45,83],[42,71],[36,76],[30,81],[25,80],[25,90],[22,96],[18,103],[20,105],[30,110],[34,119],[37,122],[40,124],[48,124],[49,125]]},
+  // South America
+  {name:'South America',color:'#6a9a3a',pts:[[-5,283],[-34,295],[-55,292],[-55,310],[-40,315],[-20,308],[-5,285],[-5,283]]},
+  // Europe
+  {name:'Europe',color:'#4a7a3a',pts:[[71,28],[59,10],[44,10],[38,27],[37,37],[41,29],[48,17],[55,8],[58,5],[71,28]]},
+  // Africa
+  {name:'Africa',color:'#7a8a2a',pts:[[37,32],[15,37],[-5,40],[-35,20],[-34,26],[-10,30],[5,2],[15,345],[37,32]]},
+  // Asia
+  {name:'Asia',color:'#5a7a2a',pts:[[71,28],[73,140],[66,168],[55,160],[44,133],[22,113],[8,100],[12,58],[37,37],[55,37],[71,28]]},
+  // Australia
+  {name:'Australia',color:'#8a7a2a',pts:[[-15,130],[-20,115],[-34,116],[-38,145],[-28,154],[-20,150],[-10,136],[-15,130]]},
+  // Greenland
+  {name:'Greenland',color:'#aaa',pts:[[83,291],[60,291],[60,315],[72,330],[83,330],[83,291]]},
+  // Japan
+  {name:'Japan',color:'#5a8a3a',pts:[[43,141],[38,140],[33,130],[36,136],[40,140],[43,141]]},
+  // UK
+  {name:'UK',color:'#4a6a3a',pts:[[51,355],[59,355],[58,348],[54,350],[51,355]]},
+];
+
+const CITIES=[
+  {name:'Mumbai',lat:19,lon:72.8,sym:'★'},
+  {name:'Tokyo',lat:35.7,lon:139.7,sym:'★'},
+  {name:'NYC',lat:40.7,lon:360-74,sym:'★'},
+  {name:'London',lat:51.5,lon:360,sym:'★'},
+  {name:'Paris',lat:48.9,lon:2.3,sym:'★'},
+  {name:'Sydney',lat:-33.9,lon:151.2,sym:'★'},
+  {name:'Moscow',lat:55.8,lon:37.6,sym:'★'},
+  {name:'Dubai',lat:25.2,lon:55.3,sym:'★'},
+  {name:'Singapore',lat:1.3,lon:103.8,sym:'★'},
+  {name:'Cairo',lat:30,lon:31.2,sym:'★'},
+  {name:'LA',lat:34,lon:360-118,sym:'★'},
+  {name:'Berlin',lat:52.5,lon:13.4,sym:'★'},
+  {name:'Beijing',lat:39.9,lon:116.4,sym:'★'},
+];
+
+function lonToX(lon,cw){
+  // lon: 0-360 (or -180 to 180 normalized to 0-360)
+  const norm=(lon-mapCenterLon+540)%360-180;
+  return cw/2+norm*mapZoom*(cw/360);
+}
+function latToY(lat,ch){
+  const norm=mapCenterLat-lat;
+  return ch/2+norm*mapZoom*(ch/180);
+}
+
+function drawMapscii(){
+  if(!mapsciiRunning)return;
+  const cv=document.getElementById('mapscii-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+
+  // Ocean background
+  ctx.fillStyle='#0a1520';ctx.fillRect(0,0,W,H);
+
+  // Draw grid lines
+  ctx.strokeStyle='rgba(40,60,80,0.4)';ctx.lineWidth=0.5;
+  for(let lon=-180;lon<=180;lon+=30){
+    const x=lonToX(lon<0?lon+360:lon,W);
+    if(x>0&&x<W){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  }
+  for(let lat=-90;lat<=90;lat+=30){
+    const y=latToY(lat,H);
+    if(y>0&&y<H){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  }
+  // Equator
+  ctx.strokeStyle='rgba(80,120,80,0.4)';ctx.lineWidth=1;
+  const eqY=latToY(0,H);
+  if(eqY>0&&eqY<H){ctx.beginPath();ctx.moveTo(0,eqY);ctx.lineTo(W,eqY);ctx.stroke();}
+
+  // Draw land masses
+  WORLD_LAND.forEach(land=>{
+    ctx.beginPath();
+    land.pts.forEach(([lat,lon],i)=>{
+      const x=lonToX(lon,W),y=latToY(lat,H);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.closePath();
+    ctx.fillStyle=land.color;ctx.fill();
+    ctx.strokeStyle=land.color.replace(')',', 0.6)').replace('rgb','rgba');
+    ctx.lineWidth=1;ctx.stroke();
+    // Land texture dots
+    ctx.fillStyle='rgba(0,0,0,0.15)';
+  });
+
+  // ASCII-style texture overlay
+  ctx.font=`${Math.max(7,mapZoom*2)}px JetBrains Mono`;
+  ctx.textAlign='center';
+
+  // Draw oceans as ASCII
+  const charSize=Math.max(8,mapZoom*3);
+  ctx.fillStyle='rgba(30,80,140,0.25)';
+  ctx.font=`${charSize-2}px JetBrains Mono`;
+  for(let y=0;y<H;y+=charSize*1.4){
+    for(let x=0;x<W;x+=charSize*0.75){
+      ctx.fillStyle=`rgba(20,60,120,${0.1+Math.sin(x*0.05+y*0.03)*0.05})`;
+      ctx.fillText('~',x,y);
+    }
+  }
+
+  // Redraw land over ASCII
+  WORLD_LAND.forEach(land=>{
+    ctx.beginPath();
+    land.pts.forEach(([lat,lon],i)=>{
+      const x=lonToX(lon,W),y=latToY(lat,H);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.closePath();
+    ctx.fillStyle=land.color+'cc';ctx.fill();
+    ctx.strokeStyle='rgba(100,140,60,0.8)';ctx.lineWidth=mapZoom>4?1.5:1;ctx.stroke();
+  });
+
+  // Land labels
+  if(mapZoom>=2){
+    ctx.fillStyle='rgba(180,220,120,0.7)';
+    ctx.font=`${Math.max(8,mapZoom*2.5)}px JetBrains Mono`;
+    ctx.textAlign='center';
+    const labels=[
+      {name:'NORTH\nAMERICA',lat:45,lon:260},
+      {name:'SOUTH\nAMERICA',lat:-20,lon:300},
+      {name:'EUROPE',lat:50,lon:15},
+      {name:'AFRICA',lat:5,lon:20},
+      {name:'ASIA',lat:50,lon:90},
+      {name:'AUSTRALIA',lat:-28,lon:135},
+      {name:'ANTARCTICA',lat:-80,lon:20},
+    ];
+    labels.forEach(l=>{
+      const x=lonToX(l.lon,W),y=latToY(l.lat,H);
+      if(x>20&&x<W-20&&y>20&&y<H-20){
+        l.name.split('\n').forEach((line,i)=>ctx.fillText(line,x,y+i*12));
+      }
+    });
+  }
+
+  // Lon/lat labels
+  ctx.fillStyle='rgba(100,140,180,0.6)';
+  ctx.font='9px JetBrains Mono';ctx.textAlign='center';
+  for(let lon=-180;lon<=180;lon+=30){
+    const x=lonToX(lon<0?lon+360:lon,W);
+    if(x>10&&x<W-10)ctx.fillText(`${lon}°`,x,H-5);
+  }
+  ctx.textAlign='right';
+  for(let lat=-90;lat<=90;lat+=30){
+    const y=latToY(lat,H);
+    if(y>5&&y<H-5)ctx.fillText(`${lat}°`,W-4,y);
+  }
+
+  // Draw cities
+  CITIES.forEach(city=>{
+    let lon=city.lon;if(lon>180)lon=lon-360;
+    const x=lonToX(lon<0?lon+360:lon,W),y=latToY(city.lat,H);
+    if(x>5&&x<W-5&&y>5&&y<H-25){
+      ctx.fillStyle='#ff4444';
+      ctx.font=`${Math.max(10,mapZoom*3)}px serif`;
+      ctx.textAlign='center';
+      ctx.fillText('★',x,y);
+      if(mapZoom>=3){
+        ctx.fillStyle='rgba(255,200,100,0.9)';
+        ctx.font='9px JetBrains Mono';
+        ctx.fillText(city.name,x,y-6);
+      }
+      // Highlight Mumbai
+      if(city.name==='Mumbai'){
+        ctx.strokeStyle='rgba(122,162,247,0.8)';ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.stroke();
+      }
+    }
+  });
+
+  // Center crosshair
+  ctx.strokeStyle='rgba(122,162,247,0.5)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(W/2-15,H/2);ctx.lineTo(W/2+15,H/2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W/2,H/2-15);ctx.lineTo(W/2,H/2+15);ctx.stroke();
+
+  // Update coords
+  const displayLon=(mapCenterLon%360).toFixed(1);
+  const displayLat=mapCenterLat.toFixed(1);
+  document.getElementById('mapscii-coords').textContent=`📍 Lat: ${displayLat}°  Lon: ${displayLon}°`;
+  document.getElementById('mapscii-zoom').textContent=`Zoom: ${mapZoom}`;
+  mapsciiRaf=requestAnimationFrame(drawMapscii);
+}
+
+function mapsciiKeyHandler(e){
+  const panSpd=8/mapZoom;
+  if(e.key==='Escape'){closeMapscii();return;}
+  if(e.key==='ArrowLeft'||e.key==='a')mapCenterLon=(mapCenterLon-panSpd+360)%360;
+  if(e.key==='ArrowRight'||e.key==='d')mapCenterLon=(mapCenterLon+panSpd+360)%360;
+  if(e.key==='ArrowUp'||e.key==='w')mapCenterLat=Math.min(85,mapCenterLat+panSpd*0.5);
+  if(e.key==='ArrowDown'||e.key==='s')mapCenterLat=Math.max(-85,mapCenterLat-panSpd*0.5);
+  if(e.key==='+'||e.key==='=')mapZoom=Math.min(12,mapZoom+0.5);
+  if(e.key==='-')mapZoom=Math.max(0.5,mapZoom-0.5);
+  // Quick jump to cities
+  if(e.key==='m'||e.key==='M'){mapCenterLat=19;mapCenterLon=72.8;pushNotif('📍','MapScii','Jumped to Mumbai!','ok');}
+  e.preventDefault();
+}
+
+// ══════════════════════════════════════════════════
+//  🟡 PAC-MAN
+// ══════════════════════════════════════════════════
+function startPacman(){
+  closeFX();
+  const ov=document.createElement('div');ov.id='game-overlay';
+  ov.style.cssText='position:fixed;inset:0;z-index:310;background:#0d0e17;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:JetBrains Mono,monospace;';
+  ov.innerHTML=`
+  <div style="color:#e0af68;font-size:13px;letter-spacing:0.12em;margin-bottom:6px;">🟡 PAC-MAN — WASD/arrows move · ESC quit</div>
+  <canvas id="pac-cv" width="560" height="420" style="border:1px solid #292e42;background:#000010;border-radius:4px;"></canvas>
+  <div id="pac-hud" style="color:#e0af68;font-size:13px;margin-top:6px;display:flex;gap:20px;">
+    <span id="pac-score">Score: 0</span>
+    <span id="pac-lives">Lives: 🟡🟡🟡</span>
+    <span id="pac-level">Level: 1</span>
+  </div>`;
+  document.body.appendChild(ov);
+  const cv=document.getElementById('pac-cv');
+  const ctx=cv.getContext('2d');
+  const CW=560,CH=420;
+  const CELL=20;
+  const COLS=28,ROWS=21;
+
+  // Map: 1=wall, 0=dot, 2=empty, 3=power pellet, 4=ghost house
+  const BASE_MAP=[
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,3,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,3,1],
+    [1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,1,1,0,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,0,1,1,0,1],
+    [1,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+    [1,1,1,1,0,1,1,1,2,1,1,2,2,2,2,2,2,1,1,2,1,1,1,0,1,1,1,1],
+    [1,1,1,1,0,1,2,2,2,2,2,2,4,4,4,4,2,2,2,2,2,1,2,0,1,1,1,1],
+    [1,1,1,1,0,1,2,1,1,2,4,4,4,4,4,4,4,4,2,1,1,2,1,0,1,1,1,1],
+    [2,2,2,2,0,2,2,1,2,2,4,4,4,4,4,4,4,4,2,2,1,2,2,0,2,2,2,2],
+    [1,1,1,1,0,1,2,1,1,1,1,1,2,2,2,2,1,1,1,1,1,2,1,0,1,1,1,1],
+    [1,1,1,1,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,1,1,1,1],
+    [1,1,1,1,0,1,2,1,1,1,1,1,2,1,1,2,1,1,1,1,1,2,1,0,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,0,1],
+    [1,3,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,3,1],
+    [1,1,0,1,0,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,0,1,0,1,1],
+    [1,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1],
+    [1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  ];
+
+  let map,dots,score,lives,level,dead,won,deadTimer,gameLoop,keys={};
+  let pacman,ghosts,powerTimer;
+
+  const GHOST_COLORS=['#ff4400','#ffaaff','#44ffff','#ffaa44'];
+  const GHOST_NAMES=['Blinky','Pinky','Inky','Clyde'];
+
+  function initLevel(){
+    map=BASE_MAP.map(row=>[...row]);
+    dots=0;
+    map.forEach(row=>row.forEach(c=>{if(c===0||c===3)dots++;}));
+    pacman={x:14,y:16,dx:0,dy:0,mouth:0,mDir:1,moveTimer:0,dead:false,deadAnim:0};
+    ghosts=GHOST_COLORS.map((_,i)=>({
+      x:13+i%2,y:9+Math.floor(i/2),dx:0,dy:0,
+      color:GHOST_COLORS[i],scared:false,eaten:false,
+      moveTimer:Math.floor(Math.random()*10),
+      scatterTarget:[i%2===0?0:27,i<2?0:20]
+    }));
+    powerTimer=0;
+    dead=false;won=false;deadTimer=0;
+  }
+
+  function reset(){score=0;lives=3;level=1;initLevel();updateHUD();}
+
+  function updateHUD(){
+    document.getElementById('pac-score').textContent=`Score: ${score}`;
+    document.getElementById('pac-lives').textContent=`Lives: ${'🟡'.repeat(lives)}`;
+    document.getElementById('pac-level').textContent=`Level: ${level}`;
+  }
+
+  function cellAt(x,y){if(y<0||y>=ROWS||x<0||x>=COLS)return 1;return map[y][x];}
+  function canMove(x,y){const c=cellAt(Math.round(x),Math.round(y));return c!==1;}
+
+  function movePacman(){
+    if(pacman.dead)return;
+    pacman.moveTimer++;
+    const spd=8-level;
+    if(pacman.moveTimer<spd)return;
+    pacman.moveTimer=0;
+    // Try current direction
+    const nx=pacman.x+pacman.dx;
+    const ny=pacman.y+pacman.dy;
+    let px=((nx%COLS)+COLS)%COLS;
+    if(canMove(px,ny)){pacman.x=px;pacman.y=ny;}
+    // Mouth animation
+    pacman.mouth+=0.3*pacman.mDir;
+    if(pacman.mouth>0.4||pacman.mouth<0)pacman.mDir*=-1;
+    // Eat dots
+    const cx=Math.round(pacman.x),cy=Math.round(pacman.y);
+    if(cx>=0&&cx<COLS&&cy>=0&&cy<ROWS){
+      if(map[cy][cx]===0){map[cy][cx]=2;score+=10;dots--;updateHUD();}
+      else if(map[cy][cx]===3){
+        map[cy][cx]=2;score+=50;dots--;powerTimer=200;
+        ghosts.forEach(g=>{g.scared=true;g.eaten=false;});
+        updateHUD();
+        pushNotif('⚡','PAC-MAN','Power pellet! Ghosts scared!','ok');
+      }
+    }
+    if(dots===0){won=true;}
+  }
+
+  function moveGhost(g){
+    if(g.eaten)return;
+    g.moveTimer++;
+    const spd=powerTimer>0?14:10-Math.min(5,level);
+    if(g.moveTimer<spd)return;
+    g.moveTimer=0;
+    const dirs=[{dx:1,dy:0},{dx:-1,dy:0},{dx:0,dy:1},{dx:0,dy:-1}];
+    const shuffled=dirs.sort(()=>Math.random()-.5);
+    // Prefer moving toward pacman when not scared
+    let bestDir=null,bestDist=Infinity;
+    shuffled.forEach(d=>{
+      const nx=(g.x+d.dx+COLS)%COLS,ny=g.y+d.dy;
+      if(!canMove(nx,ny))return;
+      if(-d.dx===g.dx&&-d.dy===g.dy&&(g.dx||g.dy))return; // no reverse
+      let dist;
+      if(g.scared){
+        dist=-(Math.abs(nx-pacman.x)+Math.abs(ny-pacman.y));
+      } else {
+        dist=Math.abs(nx-pacman.x)+Math.abs(ny-pacman.y)+(Math.random()*6);
+      }
+      if(dist<bestDist){bestDist=dist;bestDir=d;}
+    });
+    if(bestDir){g.x=(g.x+bestDir.dx+COLS)%COLS;g.y+=bestDir.dy;if(g.y<0)g.y=0;if(g.y>=ROWS)g.y=ROWS-1;g.dx=bestDir.dx;g.dy=bestDir.dy;}
+  }
+
+  function checkCollisions(){
+    ghosts.forEach(g=>{
+      if(g.eaten)return;
+      const dx=g.x-pacman.x,dy=g.y-pacman.y;
+      if(Math.abs(dx)<0.8&&Math.abs(dy)<0.8){
+        if(g.scared){
+          g.eaten=true;g.scared=false;score+=200;updateHUD();
+          pushNotif('👻','PAC-MAN','Ghost eaten! +200','ok');
+        } else if(!pacman.dead){
+          pacman.dead=true;deadTimer=80;lives--;updateHUD();
+        }
+      }
+    });
+  }
+
+  function draw(){
+    ctx.fillStyle='#000010';ctx.fillRect(0,0,CW,CH);
+    const OX=(CW-COLS*CELL)/2,OY=(CH-ROWS*CELL)/2;
+    // Draw maze
+    for(let row=0;row<ROWS;row++){
+      for(let col=0;col<COLS;col++){
+        const c=map[row][col];
+        const x=OX+col*CELL,y=OY+row*CELL;
+        if(c===1){
+          // Wall
+          ctx.fillStyle='#1a2a5a';ctx.fillRect(x,y,CELL,CELL);
+          ctx.strokeStyle='#2a4a9a';ctx.lineWidth=1.5;
+          ctx.strokeRect(x+1,y+1,CELL-2,CELL-2);
+        } else if(c===0){
+          // Dot
+          ctx.fillStyle='#c0caf5';
+          ctx.beginPath();ctx.arc(x+CELL/2,y+CELL/2,2.5,0,Math.PI*2);ctx.fill();
+        } else if(c===3){
+          // Power pellet — pulsing
+          const pulse=0.7+0.3*Math.sin(Date.now()*0.008);
+          ctx.fillStyle=`rgba(255,200,100,${pulse})`;
+          ctx.beginPath();ctx.arc(x+CELL/2,y+CELL/2,5,0,Math.PI*2);ctx.fill();
+          ctx.strokeStyle='rgba(255,220,50,0.5)';ctx.lineWidth=1;ctx.stroke();
+        } else if(c===4){
+          // Ghost house
+          ctx.fillStyle='#0d1030';ctx.fillRect(x,y,CELL,CELL);
+        }
+      }
+    }
+    // Ghost house door
+    ctx.fillStyle='#ff44aa';ctx.fillRect(OX+CELL*12,OY+CELL*8,CELL*4,3);
+
+    // Draw ghosts
+    ghosts.forEach((g,i)=>{
+      if(g.eaten){
+        // Draw eyes only
+        const gx=OX+g.x*CELL+CELL/2,gy=OY+g.y*CELL+CELL/2;
+        ctx.fillStyle='#fff';
+        ctx.beginPath();ctx.arc(gx-3,gy-1,3,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(gx+3,gy-1,3,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#00f';
+        ctx.beginPath();ctx.arc(gx-3+g.dx,gy-1+g.dy,1.5,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(gx+3+g.dx,gy-1+g.dy,1.5,0,Math.PI*2);ctx.fill();
+        return;
+      }
+      const gx=OX+g.x*CELL+CELL/2,gy=OY+g.y*CELL+CELL/2;
+      const flash=powerTimer>40||(powerTimer>0&&Math.floor(Date.now()/200)%2===0);
+      const gcol=g.scared?(flash?'#2222ff':'#ffffff'):g.color;
+      ctx.fillStyle=gcol;
+      // Ghost body
+      ctx.beginPath();
+      ctx.arc(gx,gy-2,CELL*0.45,Math.PI,0);
+      const bottom=gy+CELL*0.45-2;
+      const waveAmp=3;
+      ctx.lineTo(gx+CELL*0.45,bottom);
+      for(let w=0;w<4;w++){
+        const wx=gx+CELL*0.45-w*CELL*0.225;
+        const wdir=w%2===0?1:-1;
+        ctx.quadraticCurveTo(wx-CELL*0.1125,bottom+waveAmp*wdir,wx-CELL*0.225,bottom);
+      }
+      ctx.closePath();ctx.fill();
+      // Eyes
+      if(!g.scared){
+        ctx.fillStyle='#fff';
+        ctx.beginPath();ctx.arc(gx-3,gy-4,3.5,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(gx+3,gy-4,3.5,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#00f';
+        ctx.beginPath();ctx.arc(gx-3+g.dx*1.5,gy-4+g.dy*1.5,2,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(gx+3+g.dx*1.5,gy-4+g.dy*1.5,2,0,Math.PI*2);ctx.fill();
+      } else {
+        ctx.fillStyle='rgba(255,255,255,0.9)';
+        ctx.beginPath();ctx.arc(gx-3,gy-2,2,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(gx+3,gy-2,2,0,Math.PI*2);ctx.fill();
+        // Scared smile
+        ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(gx-5,gy+2);ctx.lineTo(gx-3,gy);ctx.lineTo(gx,gy+2);ctx.lineTo(gx+3,gy);ctx.lineTo(gx+5,gy+2);ctx.stroke();
+      }
+    });
+
+    // Draw pacman
+    if(!pacman.dead||deadTimer>40){
+      const px2=OX+pacman.x*CELL+CELL/2,py2=OY+pacman.y*CELL+CELL/2;
+      const pAngle=pacman.dx===1?0:pacman.dx===-1?Math.PI:pacman.dy===-1?-Math.PI/2:Math.PI/2;
+      const mouth=pacman.dead?Math.PI:pacman.mouth*Math.PI;
+      ctx.fillStyle='#ffff00';
+      ctx.beginPath();
+      ctx.moveTo(px2,py2);
+      ctx.arc(px2,py2,CELL*0.45,pAngle+mouth/2,pAngle+Math.PI*2-mouth/2);
+      ctx.closePath();ctx.fill();
+      // Eye
+      ctx.fillStyle='#000';
+      const eyeX=px2+Math.cos(pAngle-Math.PI/4)*4,eyeY=py2+Math.sin(pAngle-Math.PI/4)*4;
+      ctx.beginPath();ctx.arc(eyeX,eyeY,1.5,0,Math.PI*2);ctx.fill();
+    }
+
+    // Overlays
+    if(dead&&lives<=0){
+      ctx.fillStyle='rgba(0,0,0,0.8)';ctx.fillRect(0,0,CW,CH);
+      ctx.fillStyle='#f7768e';ctx.font='bold 30px Orbitron,JetBrains Mono';ctx.textAlign='center';
+      ctx.fillText('GAME OVER',CW/2,CH/2-20);
+      ctx.fillStyle='#e0af68';ctx.font='14px JetBrains Mono';
+      ctx.fillText(`Score: ${score}`,CW/2,CH/2+10);
+      ctx.fillStyle='#7aa2f7';ctx.font='13px JetBrains Mono';
+      ctx.fillText('Press R to restart',CW/2,CH/2+40);
+    }
+    if(won){
+      ctx.fillStyle='rgba(0,0,0,0.8)';ctx.fillRect(0,0,CW,CH);
+      ctx.fillStyle='#9ece6a';ctx.font='bold 28px Orbitron,JetBrains Mono';ctx.textAlign='center';
+      ctx.fillText('LEVEL CLEAR! 🎉',CW/2,CH/2-20);
+      ctx.fillStyle='#e0af68';ctx.font='14px JetBrains Mono';
+      ctx.fillText(`Score: ${score}  Level: ${level}`,CW/2,CH/2+10);
+      ctx.fillStyle='#7aa2f7';ctx.font='13px JetBrains Mono';
+      ctx.fillText('Press N for next level · R to restart',CW/2,CH/2+40);
+    }
+    ctx.textAlign='left';
+  }
+
+  function step(){
+    if(!dead&&!won){
+      if(powerTimer>0)powerTimer--;
+      if(powerTimer===0)ghosts.forEach(g=>{g.scared=false;});
+      movePacman();
+      ghosts.forEach(g=>moveGhost(g));
+      checkCollisions();
+      if(pacman.dead){
+        deadTimer--;
+        if(deadTimer<=0){
+          if(lives<=0)dead=true;
+          else{initLevel();score=score;level=level;updateHUD();}
+        }
+      }
+    }
+    draw();
+    gameLoop=requestAnimationFrame(step);
+  }
+
+  reset();
+  gameLoop=requestAnimationFrame(step);
+
+  const onKey=e=>{
+    if(e.type==='keydown'){
+      if(e.key==='Escape'){cancelAnimationFrame(gameLoop);document.removeEventListener('keydown',onKey);document.removeEventListener('keyup',onKey);ov.remove();document.getElementById('termInput').focus();return;}
+      if(e.key==='ArrowLeft'||e.key==='a'){pacman.dx=-1;pacman.dy=0;}
+      if(e.key==='ArrowRight'||e.key==='d'){pacman.dx=1;pacman.dy=0;}
+      if(e.key==='ArrowUp'||e.key==='w'){pacman.dx=0;pacman.dy=-1;}
+      if(e.key==='ArrowDown'||e.key==='s'){pacman.dx=0;pacman.dy=1;}
+      if(e.key==='r'||e.key==='R'){reset();}
+      if((e.key==='n'||e.key==='N')&&won){level++;initLevel();updateHUD();}
     }
     e.preventDefault();
   };
   document.addEventListener('keydown',onKey);
+  document.addEventListener('keyup',onKey);
 }
 
 // ══════════════════════════════════════════════════
@@ -3102,7 +3943,8 @@ function startBoot(){
     {t:'started',v:'Starting Monika.exe — DDLC Literature Club'},
     {t:'ok',v:'Loading Japan ASCII gallery (日本)...'},
     {t:'ok',v:'Loading screensavers: fire · galaxy · starfield · snow · dna · ocean · plasma · lava · dvd...'},
-    {t:'ok',v:'Loading games: snake · tetris · invaders · asteroids · flappy · breakout · pong...'},
+    {t:'ok',v:'Loading games: snake · tetris · invaders · asteroids · flappy · doom · breakout · pong · pacman...'},
+    {t:'ok',v:'Loading mapscii — ASCII world map engine v0.3.2...'},
     {t:'ok',v:'Initialising music player — PipeWire stream'},
     {t:'ok',v:'Loading theme engine: Tokyo Night'},
     {t:'ok',v:'Connecting to Mumbai server 192.168.1.108'},
@@ -3137,8 +3979,8 @@ function launchTerminal(){
     {t:'purple',v:'  ██║  ██║   ██║   ██║     ██║  ██║███████╗██║  ██║██║ ╚████║██████╔╝'},
     {t:'blank'},
     {t:'dim',  v:'  Arch Linux · Hyprland 0.49.0 · Wayland Native · Tokyo Night · v5.0'},
-    {t:'dim',  v:'  Commands: help · games · monika · monika-ascii · anime · japan · matrix · fire · plasma · dvd'},
-    {t:'dim',  v:'  Games: snake · tetris · invaders · asteroids · flappy · doom · breakout · pong'},
+    {t:'dim',  v:'  Commands: help · games · monika · monika-ascii · anime · japan · matrix · fire · plasma · dvd · mapscii'},
+    {t:'dim',  v:'  Games: snake · tetris · invaders · asteroids · flappy · doom · breakout · pong · pacman'},
     {t:'dim',  v:'  Tip: Tab autocomplete · ↑↓ history · Ctrl+T new tab · click sidebar for quick launch'},
     {t:'blank'},
   ]);
@@ -3155,7 +3997,7 @@ function launchTerminal(){
 // ══════════════════════════════════════════════════
 //  INPUT
 // ══════════════════════════════════════════════════
-const ALL_CMDS=['neofetch','fastfetch','about','skills','experience','projects','education','contact','resume','anime','pipes','cava','japan','cowsay','figlet','fortune','matrix','htop','help','clear','ls','uname','theme','sl','git','whoami','id','echo','pwd','cat','sudo','pacman','yay','paru','waifu','top','archcmds','man','chmod','chown','cp','mv','rm','mkdir','touch','grep','find','systemctl','journalctl','df','lsblk','free','ps','kill','ssh','curl','wget','ping','ip','nvim','vim','nano','weather','gpu','hyprconf','hack','real-world','hyprctl','monika','reboot','train','fire','galaxy','starfield','snow','dna','ocean','fireworks','tunnel','snake','breakout','pong','tetris','invaders','asteroids','flappy','doom','games','warp','stars','wave','neon','arkanoid','plasma','lava','dvd','monika-ascii'];
+const ALL_CMDS=['neofetch','fastfetch','about','skills','experience','projects','education','contact','resume','anime','pipes','cava','japan','cowsay','figlet','fortune','matrix','htop','help','clear','ls','uname','theme','sl','git','whoami','id','echo','pwd','cat','sudo','pacman-game','yay','paru','waifu','top','archcmds','man','chmod','chown','cp','mv','rm','mkdir','touch','grep','find','systemctl','journalctl','df','lsblk','free','ps','kill','ssh','curl','wget','ping','ip','nvim','vim','nano','weather','gpu','hyprconf','hack','real-world','hyprctl','monika','reboot','train','fire','galaxy','starfield','snow','dna','ocean','fireworks','tunnel','snake','breakout','pong','tetris','invaders','asteroids','flappy','doom','games','warp','stars','wave','neon','arkanoid','plasma','lava','dvd','monika-ascii','mapscii','pacman'];
 
 document.getElementById('termInput').addEventListener('keydown',e=>{
   const inp=e.target;
