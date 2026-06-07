@@ -9,4 +9,4 @@ HTML
 CSS
 JavaScript
 📌 Author
-Vaibhav Badade
+Vaibhav Badade.
